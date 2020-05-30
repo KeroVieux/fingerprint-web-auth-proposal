@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<html>
+<input type="text" id="userId" placeholder="userId">
+<button id="login">login</button>
+<button id="logout">logout</button>
+<button id="check">check</button>
+<body>
+<script src="http://hidoge.cn:8080/cdn/js/jquery.min.js"></script>
+<script src="http://hidoge.cn:8080/cdn/js/fingerprint2.min.js"></script>
+<script src="http://hidoge.cn:8080/cdn/js/store.modern.min.js"></script>
+<script type="text/javascript">
+  $(async () => {
+    setTimeout(function () {
+      Fingerprint2.get(async (components) => {
+        const res = await $.post('http://localhost:3000/test', {
+          authId: store.get('authId'),
+          fingerprint: window.btoa(JSON.stringify(components)),
+        })
+        console.log('res', res)
+        $('#logout').click(async () => {
+          const res = await $.post('http://localhost:3000/logout', {
+            authId: store.get('authId'),
+          })
+          store.remove('authId')
+          alert(res)
+        })
+        $('#login').click(async () => {
+          const res = await $.post('http://localhost:3000/login', {
+            userId: $('#userId').val(),
+            fingerprint: window.btoa(JSON.stringify(components)),
+          })
+          store.set('authId', res.authId)
+          alert(res ? JSON.stringify(res) : false)
+        })
+        $('#check').click(async () => {
+          const res = await $.post('http://localhost:3000/check', {
+            authId: store.get('authId'),
+            fingerprint: window.btoa(JSON.stringify(components)),
+          })
+          alert(res ? JSON.stringify(res) : false)
+        })
+      })
+    }, 500)
+  })
+
+</script>
+</body>
+
+</html>
+</body>
+</html>
