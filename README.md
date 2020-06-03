@@ -10,7 +10,7 @@ Trust me, it easy to make it happen, just follow my step, this proposal will sho
 ## How to do
 1. use fingerprint2 to identify the user's device
 2. in order to increase the probability of detection that device as unique, get the user's IP is required.
-3. set up a database to store the login record
+3. set up a database to store the login record(lowdb.js is my choice)
 4. when a user login one of your app, you insert a record to the database, like { authId, IP, fingerprint,jwtToken }
 5. when a user needs to check the auth status, you can search the database, match this user's { authId, IP, fingerprint }
 
