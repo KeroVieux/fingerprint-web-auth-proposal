@@ -21,16 +21,19 @@ Trust me, it easy to make it happen, just follow my step, this proposal will sho
 ## 3 api
 ### login
 1. after the oauth action, you have got the userId
-2. post the data { userId, fingerprint } to the login api, that will return a authId
+2. post the data { userId, fingerprint } to the login api, that will return a authId and the token
 3. store the authId in localstorage
 
 ### check
-1. post the data { authId, fingerprint } to the check api, that will return a userId and the jwtToken
-2. if it is not a legal user, the api will return false
+1. if there is a sensitive operation, please check the auth first, make sure the auth status is all right, otherwise make it login again
+2. post the data { fingerprint } to the check api, that will return a userId and the jwtToken
+3. or just take the authId from token in headers
+4. if it is not a legal user, the api will return false
 
 ### logout
-1. remove the authId in localstorage
+1. remove the authId and the token in localstorage
 2. post the data { authId } to the logout api, that will return true.
+3. or just take the authId from token in headers
 
 ## enter an app in a different domain
 1. the href should be xxx.com?authId=:authId
